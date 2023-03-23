@@ -122,6 +122,7 @@ class TAEvaluator(evaluator.AbstractEvaluator):
                 import octobot_trading.api as exchange_api
                 exchange_id = data[constants.EVALUATOR_CHANNEL_DATA_EXCHANGE_ID]
                 symbol_data = self.get_exchange_symbol_data(exchange_name, exchange_id, symbol)
+                time_frame = None
                 for time_frame in time_frames_to_update:
                     candles_data = exchange_api.get_symbol_historical_candles(symbol_data, time_frame, limit=1)
                     # do not trigger ohlcv_callback on empty candles data
