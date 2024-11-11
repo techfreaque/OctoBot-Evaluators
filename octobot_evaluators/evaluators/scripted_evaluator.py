@@ -239,7 +239,10 @@ class ScriptedEvaluator(evaluator.AbstractEvaluator):
         return self._script
 
     async def user_commands_callback(self, bot_id, subject, action, data) -> None:
-        await super().user_commands_callback(bot_id, subject, action, data)
+        self.logger.debug(f"Received {action} command")
+        if action == commons_enums.UserCommands.RELOAD_CONFIG.value:
+            await self._reload_script(bot_id)
+            self.logger.debug("Reloaded configuration")
         if action in (commons_enums.UserCommands.RELOAD_SCRIPT.value, commons_enums.UserCommands.RELOAD_CONFIG.value):
             # also reload script on RELOAD_CONFIG
             await self._reload_script(bot_id)
